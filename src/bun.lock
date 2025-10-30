@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "app",
+      "name": "src",
       "dependencies": {
         "iron-session": "^8.0.4",
         "next": "16.0.1",
