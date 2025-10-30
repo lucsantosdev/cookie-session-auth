@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import { sessionOptions, SessionData, defaultSession } from "./lib"
 import { getIronSession } from "iron-session"
 import { redirect } from "next/navigation"
+import { revalidatePath } from "next/cache"
 
 let username = "lucsantosdev"
 let isPremium = true
@@ -50,4 +51,19 @@ export const logout = async () => {
     const session = await getSession()
     session.destroy()
     redirect("/")
+}
+
+export const changePremiumStatus = async () => {
+    const session = await getSession()
+    session.isPremium = !session.isPremium
+    await session.save()
+    revalidatePath("/profile")
+}
+
+export const changeUsername = async (formData: FormData) => {
+    const session = await getSession()
+    const newUsername = formData.get("username") as string
+    session.username = newUsername
+    await session.save()
+    revalidatePath("/profile")
 }
